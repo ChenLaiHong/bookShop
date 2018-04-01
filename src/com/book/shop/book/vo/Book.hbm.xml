@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+ <hibernate-mapping>
+	<class name="com.book.shop.book.vo.Book" table="book">
+		<id name="bid">
+			<generator class="native"/>
+		</id>
+		<property name="bname"/>
+		<property name="author"/>
+		<property name="book_concern"/>
+		<property name="shop_price"/>
+		<property name="market_price"/>
+		<property name="book_desc"/>
+		<property name="image"/>
+		<property name="is_hot"/>
+		<property name="bdate"/>
+		
+		<many-to-one name="categorySecond" lazy="false" class="com.book.shop.categorysecond.vo.CategorySecond" column="csid"></many-to-one>
+	</class>
+</hibernate-mapping>
