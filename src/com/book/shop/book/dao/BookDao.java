@@ -10,35 +10,35 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import com.book.shop.book.vo.Book;
 import com.book.shop.utils.PageHibernateCallback;
 
-//Í¼Êé³Ö¾Ã²ã
+//å›¾ä¹¦æŒä¹…å±‚
 public class BookDao extends HibernateDaoSupport{
-//Ê×Ò³ÈÈÃÅµÄÍ¼Êé²éÑ¯
+	//é¦–é¡µçƒ­é—¨çš„å›¾ä¹¦æŸ¥è¯¢
 	public List<Book> findHot() {
-		//Ê¹ÓÃÀëÏßÌõ¼ş²éÑ¯
+		//ä½¿ç”¨ç¦»çº¿æ¡ä»¶æŸ¥è¯¢
 		DetachedCriteria criteria = DetachedCriteria.forClass(Book.class);
-		//²éÑ¯Ìõ¼şis_hot=1
+		//æŸ¥è¯¢æ¡ä»¶is_hot=1
 		criteria.add(Restrictions.eq("is_hot",1));
-		//µ¹ĞòÅÅĞòÊä³ö
+		//å€’åºæ’åºè¾“å‡º
 		criteria.addOrder(Order.desc("bdate"));
-		//Ö´ĞĞ²éÑ¯
+		//æ‰§è¡ŒæŸ¥è¯¢
 		List<Book> list = this.getHibernateTemplate().findByCriteria(criteria, 0, 10);
 		return list;
 	}
-//Ê×Ò³×îĞÂÍ¼Êé²éÑ¯
+	//é¦–é¡µæœ€æ–°å›¾ä¹¦æŸ¥è¯¢
 	public List<Book> findNew() {
 		DetachedCriteria criteria = DetachedCriteria.forClass(Book.class);
-		//µ¹ĞòÅÅĞòÊä³ö
+		//å€’åºæ’åºè¾“å‡º
 		criteria.addOrder(Order.desc("bdate"));
 		List<Book> list = this.getHibernateTemplate().findByCriteria(criteria, 0, 15);
-		
+
 		return list;
 	}
-	//¸ù¾İÍ¼Êéid²éÑ¯Í¼Êé
+	//æ ¹æ®å›¾ä¹¦idæŸ¥è¯¢å›¾ä¹¦
 	public Book findByBid(int bid) {
-		
+
 		return this.getHibernateTemplate().get(Book.class, bid);
 	}
-	//¸ù¾İ·ÖÀàid²éÑ¯Í¼Êé¸öÊı
+	//æ ¹æ®åˆ†ç±»idæŸ¥è¯¢å›¾ä¹¦ä¸ªæ•°
 	public int findCountCid(int cid) {
 		String hql = "select count(*) from Book b where b.categorySecond.category.cid=?";
 		List<Long> list = this.getHibernateTemplate().find(hql, cid);
@@ -47,17 +47,17 @@ public class BookDao extends HibernateDaoSupport{
 		}
 		return 0;
 	}
-	//¸ù¾İ·ÖÀàid²éÑ¯Í¼Êé¼¯ºÏ
+	//æ ¹æ®åˆ†ç±»idæŸ¥è¯¢å›¾ä¹¦é›†åˆ
 	public List<Book> findByPageCid(int cid, int begin, int limit) {
 		String hql = "select b from Book b join b.categorySecond cs join cs.category c where c.cid = ?";
-		//·ÖÒ³
+		//åˆ†é¡µ
 		List<Book> list = this.getHibernateTemplate().execute(new PageHibernateCallback<Book>(hql,new Object[]{cid},begin,limit));
 		if(list !=null && list.size() > 0){
 			return list;
 		}
 		return null;
 	}
-	//¸ù¾İ¶ş¼¶·ÖÀà²éÑ¯Í¼Êé¸öÊı
+	//æ ¹æ®äºŒçº§åˆ†ç±»æŸ¥è¯¢å›¾ä¹¦ä¸ªæ•°
 	public int findCountCsid(int csid) {
 		String hql = "select count(*) from Book b where b.categorySecond.csid = ?";
 		List<Long> list = this.getHibernateTemplate().find(hql, csid);
@@ -66,7 +66,7 @@ public class BookDao extends HibernateDaoSupport{
 		}
 		return 0;
 	}
-	//¸ù¾İ¶ş¼¶·ÖÀà²éÑ¯Í¼ÊéĞÅÏ¢
+	//æ ¹æ®äºŒçº§åˆ†ç±»æŸ¥è¯¢å›¾ä¹¦ä¿¡æ¯
 	public List<Book> findByPageCsid(int csid, int begin, int limit) {
 		String hql = "select b from Book b join b.categorySecond cs where cs.csid = ?";
 		List<Book> list = this.getHibernateTemplate().execute(new PageHibernateCallback<Book>(hql,new Object[]{csid},begin,limit));
@@ -75,6 +75,57 @@ public class BookDao extends HibernateDaoSupport{
 		}
 		return null;
 	}
-	
+
+
+	//æ ¹æ®è¾“å…¥å†…å®¹æŸ¥æ‰¾å›¾ä¹¦æ•°é‡
+	public int searchCount(String title) {
+		String hql = "select count(*) from Book b where b.bname like '%"+title+"%'";
+		List<Long> list = this.getHibernateTemplate().find(hql);
+		if(list != null && list.size() >0){
+			return list.get(0).intValue();
+		}
+		return 0;
+	}
+	public List<Book> searchPage(String title, int begin, int limit) {
+		String hql = "from Book b where b.bname like '%"+title+"%'";
+		List<Book> list = this.getHibernateTemplate().execute(new PageHibernateCallback<Book>(hql,null,begin,limit));
+		if(list !=null && list.size() > 0){
+			return list;
+		}
+		return null;
+	}
+	//ç»Ÿè®¡æ‰€æœ‰å›¾ä¹¦ä¸ªæ•°
+	public int findCount() {
+		String hql = "select count(*) from Book";
+		List<Long> list = this.getHibernateTemplate().find(hql);
+		if(list != null && list.size() >0){
+			return list.get(0).intValue();
+		}
+		return 0;
+	}
+	public List<Book> findByPage(int begin, int limit) {
+		String hql = "from Book order by bdate desc";
+		List<Book> list = this.getHibernateTemplate().execute(new PageHibernateCallback<Book>(hql,null,begin,limit));
+		if(list !=null && list.size() > 0){
+			return list;
+		}
+		return null;
+	}
+	//ä¿å­˜
+	public void save(Book book) {
+		this.getHibernateTemplate().save(book);
+
+	}
+	//åˆ é™¤å›¾ä¹¦
+	public void delete(Book book) {
+		this.getHibernateTemplate().delete(book);
+
+	}
+	//ä¿®æ”¹å›¾ä¹¦ä¿¡æ¯
+	public void update(Book book) {
+		this.getHibernateTemplate().update(book);
+
+	}
+
 
 }

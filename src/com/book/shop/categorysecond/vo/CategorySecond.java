@@ -6,16 +6,16 @@ import java.util.Set;
 import com.book.shop.book.vo.Book;
 import com.book.shop.category.vo.Category;
 
-//¶ş¼¶·ÖÀàÊµÌåÀà
+//äºŒçº§åˆ†ç±»å®ä½“ç±»
 public class CategorySecond {
 
 	private int csid;
 	private String csname;
-	//ËùÊôÒ»¼¶·ÖÀà,´æµÄÊÇÒ»¼¶·ÖÀàÊµÌå
+	//æ‰€å±ä¸€çº§åˆ†ç±»,å­˜çš„æ˜¯ä¸€çº§åˆ†ç±»å®ä½“
 	private Category category;
-	//ÅäÖÃÍ¼Êé¼¯ºÏ
+	//é…ç½®å›¾ä¹¦é›†åˆ
 	private Set<Book> books = new HashSet<Book>();
-	
+
 	public Set<Book> getBooks() {
 		return books;
 	}
@@ -40,6 +40,6 @@ public class CategorySecond {
 	public void setCategory(Category category) {
 		this.category = category;
 	}
-	
-	
+
+
 }

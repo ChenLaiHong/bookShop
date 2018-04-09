@@ -2,9 +2,10 @@ package com.book.shop.book.vo;
 
 import java.util.Date;
 
+
 import com.book.shop.categorysecond.vo.CategorySecond;
 
-//ÊéµÄÊµÌåÀà
+//ä¹¦çš„å®ä½“ç±»
 public class Book {
 
 	private int bid;
@@ -17,14 +18,25 @@ public class Book {
 	private String image;
 	private int is_hot;
 	private Date bdate;
-	//¶ş¼¶·ÖÀàµÄÍâ¼ü£ºÊ¹ÓÃ¶ş¼¶·ÖÀà¶ÔÏó
+	private Integer number;
+
+	//äºŒçº§åˆ†ç±»çš„å¤–é”®ï¼šä½¿ç”¨äºŒçº§åˆ†ç±»å¯¹è±¡
 	private CategorySecond categorySecond;
-	
+
 	public CategorySecond getCategorySecond() {
 		return categorySecond;
 	}
 	public void setCategorySecond(CategorySecond categorySecond) {
 		this.categorySecond = categorySecond;
+	}
+
+
+
+	public Integer getNumber() {
+		return number;
+	}
+	public void setNumber(Integer number) {
+		this.number = number;
 	}
 	public int getBid() {
 		return bid;
@@ -86,5 +98,5 @@ public class Book {
 	public void setBdate(Date bdate) {
 		this.bdate = bdate;
 	}
-	
+
 }

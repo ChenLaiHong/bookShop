@@ -1,5 +1,7 @@
 package com.book.shop.book.action;
 
+import org.apache.struts2.ServletActionContext;
+
 import com.book.shop.book.service.BookService;
 
 import com.book.shop.book.vo.Book;
@@ -9,25 +11,35 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 
-//Í¼Êéaction
+//å›¾ä¹¦action
 public class BookAction extends ActionSupport implements ModelDriven<Book>{
-//ÓÃÓÚ½ÓÊÕÊı¾İµÄÄ£ĞÍÇı¶¯
+	//ç”¨äºæ¥æ”¶æ•°æ®çš„æ¨¡å‹é©±åŠ¨
 	private Book book = new Book();
 	public Book getModel() {
 		return book;
 	}
-	//×¢ÈëbookService
+	//æ³¨å…¥bookService
 	private BookService bookService;
-	
-	//½ÓÊÕÒ»¼¶·ÖÀàµÄcid
+
+	//æ¥æ”¶ä¸€çº§åˆ†ç±»çš„cid
 	private int cid;
-	//×¢ÈëÒ»¼¶·ÖÀàservice
+	//æ³¨å…¥ä¸€çº§åˆ†ç±»service
 	private CategoryService categoryService;
-	//½ÓÊÕµ±Ç°µÄÒ³Êı
+	//æ¥æ”¶å½“å‰çš„é¡µæ•°
 	private int page;
-	//½ÓÊÕ¶ş¼¶·ÖÀàµÄid
+	//æ¥æ”¶äºŒçº§åˆ†ç±»çš„id
 	private int csid;
-	
+	//æ¥æ”¶æŸ¥æ‰¾çš„çš„å†…å®¹
+	private String title;
+
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
 	public int getCsid() {
 		return csid;
@@ -59,29 +71,44 @@ public class BookAction extends ActionSupport implements ModelDriven<Book>{
 
 
 
-	//¸ù¾İid²éÑ¯Í¼Êé
+	//æ ¹æ®idæŸ¥è¯¢å›¾ä¹¦
 	public String findByBid(){
-		//µ÷ÓÃservice·½·¨Íê³É²éÑ¯
-	    book = bookService.findByBid(book.getBid());
+		//è°ƒç”¨serviceæ–¹æ³•å®ŒæˆæŸ¥è¯¢
+		book = bookService.findByBid(book.getBid());
 		return "findByBid";
 	}
-	
-	//¸ù¾İ·ÖÀàµÄid²éÑ¯Í¼Êé
+
+	//æ ¹æ®åˆ†ç±»çš„idæŸ¥è¯¢å›¾ä¹¦
 	public String findByCid(){
 		PageBean<Book> pageBean = bookService.findByPageCid(cid,page);
-		//½«pageBean´æÈëµ½ÖµÕ»
+		//å°†pageBeanå­˜å…¥åˆ°å€¼æ ˆ
 		ActionContext.getContext().getValueStack().set("pageBean", pageBean);
 		return "findByCid";
 	}
-	
-	//¸ù¾İ¶ş¼¶·ÖÀàid²éÑ¯
+
+	//æ ¹æ®äºŒçº§åˆ†ç±»idæŸ¥è¯¢
 	public String findByCsid(){
-		
-//		¸ù¾İ¶ş¼¶·ÖÀà²éÑ¯Í¼Êé
+
+//		æ ¹æ®äºŒçº§åˆ†ç±»æŸ¥è¯¢å›¾ä¹¦
 		PageBean<Book> pageBean = bookService.findByPageCsid(csid,page);
 		ActionContext.getContext().getValueStack().set("pageBean", pageBean);
-		
+
 		return "findByCsid";
 	}
 
+	//æ ¹æ®è¾“å…¥å†…å®¹è¿›è¡Œæ¨¡ç³Šæœç´¢
+	public String search(){
+		if(!title.isEmpty()){
+			ServletActionContext.getRequest().getSession()
+					.setAttribute("title", title);
+		}
+		PageBean<Book> pageBean = bookService.search(title,page);
+		if(pageBean != null){
+			ActionContext.getContext().getValueStack().set("pageBean", pageBean);
+			return "search";
+		}else{
+			this.addActionError("æ‚¨å¥½ï¼æ²¡æœ‰æ‚¨æœç´¢çš„ç›¸åº”å†…å®¹ï¼Œè¯·æ¢ä¸ªè¯å‘—ï¼");
+			return "msg";
+		}
+	}
 }

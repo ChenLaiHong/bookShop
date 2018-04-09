@@ -10,9 +10,9 @@ public class Category implements Serializable{
 
 	private int cid;
 	private String cname;
-	//一级分类存放二级分类的集合
+	//涓�绾у垎绫诲瓨鏀句簩绾у垎绫荤殑闆嗗悎
 	public Set<CategorySecond> categorySeconds = new HashSet<CategorySecond>();
-	
+
 	public Set<CategorySecond> getCategorySeconds() {
 		return categorySeconds;
 	}

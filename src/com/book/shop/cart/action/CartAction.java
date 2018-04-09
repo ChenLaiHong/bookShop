@@ -8,15 +8,15 @@ import com.book.shop.cart.vo.Cart;
 import com.book.shop.cart.vo.CartItem;
 import com.opensymphony.xwork2.ActionSupport;
 
-//¹ºÎï³µµÄaction
+//è´­ç‰©è½¦çš„action
 public class CartAction extends ActionSupport{
-	//½ÓÊÕbid
+	//æ¥æ”¶bid
 	private int bid;
-	//½ÓÊÕÊıÁ¿
+	//æ¥æ”¶æ•°é‡
 	private int count;
-	//×¢ÈëÍ¼ÊéµÄservice
+	//æ³¨å…¥å›¾ä¹¦çš„service
 	private BookService bookService;
-	
+
 	public void setBookService(BookService bookService) {
 		this.bookService = bookService;
 	}
@@ -29,23 +29,32 @@ public class CartAction extends ActionSupport{
 		this.count = count;
 	}
 
-	//½«¹ºÎïÌí¼Óµ½¹ºÎï³µÖ´ĞĞµÄ·½·¨
+	//å°†è´­ç‰©æ·»åŠ åˆ°è´­ç‰©è½¦æ‰§è¡Œçš„æ–¹æ³•
 	public String addCart(){
-		//·â×°Ò»¸öCarItem¶ÔÏó
+		//å°è£…ä¸€ä¸ªCarItemå¯¹è±¡
 		CartItem cartItem = new CartItem();
-		//ÉèÖÃÊıÁ¿
-		cartItem.setCount(count);
-		//¸ù¾İbid½øĞĞ²éÑ¯
+		//æŸ¥æ‰¾åº“å­˜
+		//æ ¹æ®bidè¿›è¡ŒæŸ¥è¯¢
 		Book book = bookService.findByBid(bid);
-		//ÉèÖÃÉÌÆ·
-		cartItem.setBook(book);
-		//½«¹ºÎïÏîÌí¼Óµ½¹ºÎï³µ
-		//¹ºÎï³µ´æÔÚsessionÖĞ
-		Cart cart = getCart();
-		cart.addCart(cartItem);
-		return "addCart";
+		int number = book.getNumber();
+		if(count > number){
+			this.addActionMessage("åº“å­˜ä¸è¶³ï¼");
+			return "msg";
+		}else{
+			//è®¾ç½®æ•°é‡
+			cartItem.setCount(count);
+			book.setNumber(book.getNumber()-count);
+			bookService.update(book);
+			//è®¾ç½®å•†å“
+			cartItem.setBook(book);
+			//å°†è´­ç‰©é¡¹æ·»åŠ åˆ°è´­ç‰©è½¦
+			//è´­ç‰©è½¦å­˜åœ¨sessionä¸­
+			Cart cart = getCart();
+			cart.addCart(cartItem);
+			return "addCart";
+		}
 	}
-//»ñµÃ¹ºÎï³µµÄ·½·¨
+	//è·å¾—è´­ç‰©è½¦çš„æ–¹æ³•
 	private Cart getCart() {
 		Cart cart = (Cart) ServletActionContext.getRequest().getSession().getAttribute("cart");
 		if(cart == null){
@@ -54,26 +63,26 @@ public class CartAction extends ActionSupport{
 		}
 		return cart;
 	}
-	
-	//Çå¿Õ¹ºÎï³µ
+
+	//æ¸…ç©ºè´­ç‰©è½¦
 	public String clearCart(){
-		//»ñµÃ¹ºÎï³µ¶ÔÏó
+		//è·å¾—è´­ç‰©è½¦å¯¹è±¡
 		Cart cart = getCart();
-		//µ÷ÓÃ¹ºÎï³µÇå¿Õ·½·¨
+		//è°ƒç”¨è´­ç‰©è½¦æ¸…ç©ºæ–¹æ³•
 		cart.clearCart();
 		return "clearCart";
 	}
-	
-	//ÒÆ³ı¹ºÎïÏîµÄ·½·¨
+
+	//ç§»é™¤è´­ç‰©é¡¹çš„æ–¹æ³•
 	public String removeCart(){
-		//»ñµÃ¹ºÎï³µµÄ¶ÔÏó
+		//è·å¾—è´­ç‰©è½¦çš„å¯¹è±¡
 		Cart cart = getCart();
-		//µ÷ÓÃ¹ºÎï³µÖĞÒÆ³ı·½·¨
+		//è°ƒç”¨è´­ç‰©è½¦ä¸­ç§»é™¤æ–¹æ³•
 		cart.removeCart(bid);
-		//·µ»ØÒ³Ãæ
+		//è¿”å›é¡µé¢
 		return "removeCart";
 	}
-	//µã»÷ÎÒµÄ¹ºÎï³µºóÒ³ÃæÌø×ª
+	//ç‚¹å‡»æˆ‘çš„è´­ç‰©è½¦åé¡µé¢è·³è½¬
 	public String myCart(){
 		return "myCart";
 	}

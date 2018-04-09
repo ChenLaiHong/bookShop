@@ -8,8 +8,8 @@ public class User {
 	private String address;
 	private String phone;
 	private String email;
-	private Integer state;
-	private String code;
+	/*	private Integer state;
+        private String code;*/
 	public Integer getUid() {
 		return uid;
 	}
@@ -46,7 +46,7 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public Integer getState() {
+	/*public Integer getState() {
 		return state;
 	}
 	public void setState(Integer state) {
@@ -57,8 +57,8 @@ public class User {
 	}
 	public void setCode(String code) {
 		this.code = code;
-	}
-	
-	
-	
+	}*/
+
+
+
 }
