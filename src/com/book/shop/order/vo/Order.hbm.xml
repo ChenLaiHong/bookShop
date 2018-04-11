@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+ <hibernate-mapping>
+	<class name="com.book.shop.order.vo.Order" table="orders">
+		<id name="oid">
+			<generator class="native"/>
+		</id>
+		<property name="total"/>
+		<property name="time"/>
+		<property name="state"/>
+		<property name="name"/>
+		<property name="addr"/>
+		<property name="phone"/>
+		<property name="messages"/>
+		<!-- 订单与用户的关联 -->
+		<many-to-one name="user" lazy="false" class="com.book.shop.user.vo.User" column="uid"></many-to-one>
+		<!-- 订单与订单项 -->
+		<set name="orderItems" order-by="itemid" lazy="false" cascade="save-update">
+			<key column="uid"/>
+			<one-to-many class="com.book.shop.order.vo.OrderItem"/>
+		</set>
+		<set name="comments">
+			<key column="oid"/>
+			<one-to-many class="com.book.shop.comment.vo.Comment"/>
+		</set>
+	</class>
+</hibernate-mapping>
