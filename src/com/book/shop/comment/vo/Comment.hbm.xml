@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+ <hibernate-mapping>
+	<class name="com.book.shop.comment.vo.Comment" table="comments">
+		<id name="comment_id">
+			<generator class="native"/>
+		</id>
+		<property name="comment"/>
+		<property name="time"/>
+		<property name="commenter"/>
+<many-to-one name="order" lazy="false" class="com.book.shop.order.vo.Order" column="oid "></many-to-one>
+	</class>
+</hibernate-mapping>
