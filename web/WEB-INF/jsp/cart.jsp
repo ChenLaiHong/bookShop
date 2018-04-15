@@ -35,7 +35,7 @@
 				<table>
 					<tbody><tr>
 						<th>图片</th>
-						<th>商品</th>
+						<th>图书</th>
 						<th>价格</th>
 						<th>数量</th>
 						<th>小计</th>
@@ -75,7 +75,7 @@
 				</div>
 				<div class="bottom">
 					<a href="${pageContext.request.contextPath}/cart_clearCart.action" id="clear" class="clear">清空购物车</a>
-					<a href="./会员登录.htm" id="submit" class="submit">提交订单</a>
+					<a href="${pageContext.request.contextPath}/order_save.action" id="submit" class="submit">提交订单</a>
 				</div>
 		</div>
 		</s:if>

@@ -21,19 +21,7 @@
 			</a>
 		</div>
 	</div>
-<div class="span9">
-<!--悬浮搜索框-->
 
-				<div class="nav white">
-					<div class="search-bar pr">
-						<form>
-							<input id="searchInput" name="index_none_header_sysc" type="text" placeholder="搜索" autocomplete="off"/>
-							<input id="ai-topsearch" class="submit am-btn" value="搜索" index="1" type="submit"/>
-						</form>
-					</div>
-				</div>
-</div>
-	
 	<%@ include file="menu.jsp" %>
 
 </div>	
@@ -44,54 +32,20 @@
 		<div class="span24">
 			<div id="hotProduct" class="hotProduct clearfix">
 					<div class="title">
-						<strong>热门商品</strong>
-						<!-- <a  target="_blank"></a> -->
+						<strong>热门图书</strong>
 					</div>
 					<ul class="tab">
 							<li class="current">
 								<a href="./蔬菜分类.htm?tagIds=1" target="_blank"></a>
 							</li>
-							<li>
-								<a  target="_blank"></a>
-							</li>
-							<li>
-								<a target="_blank"></a>
-							</li>
 					</ul>
-<!-- 					<div class="hotProductAd">
-			<img src="${pageContext.request.contextPath}/image/a.jpg" width="260" height="343" alt="热门商品" title="热门商品">
-</div> -->
+
 						<ul class="tabContent" style="display: block;">
+						<s:iterator var="b" value="hList">
 									<li>
-										<a target="_blank"><img src="${pageContext.request.contextPath}/image/b.jpg" data-original="http://storage.shopxx.net/demo-image/3.0/201301/0ff130db-0a1b-4b8d-a918-ed9016317009-thumbnail.jpg" style="display: block;"></a>
+										<a href="${pageContext.request.contextPath}/book_findByBid.action?bid=<s:property value="#b.bid"/>"><img src="${pageContext.request.contextPath}/<s:property value="#b.image"/>" data-original="http://storage.shopxx.net/demo-image/3.0/201301/0ff130db-0a1b-4b8d-a918-ed9016317009-thumbnail.jpg" style="display: block;"></a>
 									</li>
-									<li>
-										<a  target="_blank"><img src="${pageContext.request.contextPath}/image/c.jpg" data-original="http://storage.shopxx.net/demo-image/3.0/201301/51afeef5-f6cb-4936-abea-315cfca0edc0-thumbnail.jpg" style="display: block;"></a>
-									</li>
-									<li>
-										<a  target="_blank"><img src="${pageContext.request.contextPath}/image/d.jpg" style="display: block;"></a>
-									</li>
-									<li>
-										<a  target="_blank"><img src="${pageContext.request.contextPath}/image/e.jpg" style="display: block;"></a>
-									</li>
-									<li>
-										<a target="_blank"><img src="${pageContext.request.contextPath}/image/f.jpg" style="display: block;"></a>
-									</li>
-									<li>
-										<a  target="_blank"><img src="${pageContext.request.contextPath}/image/g.jpg" style="display: block;"></a>
-									</li>
-									<li>
-										<a  target="_blank"><img src="${pageContext.request.contextPath}/image/h.jpg" style="display: block;"></a>
-									</li>
-									<li>
-										<a target="_blank"><img src="${pageContext.request.contextPath}/image/i.jpg" style="display: block;"></a>
-									</li>
-									<li>
-										<a target="_blank"><img src="${pageContext.request.contextPath}/image/i.jpg" style="display: block;"></a>
-									</li>
-									<li>
-										<a target="_blank"><img src="${pageContext.request.contextPath}/image/i.jpg" style="display: block;"></a>
-									</li>
+						</s:iterator>		
 						</ul>
 						<ul class="tabContent" style="display: none;">
 									<li>
@@ -150,49 +104,22 @@
 		<div class="span24">
 			<div id="newProduct" class="newProduct clearfix">
 					<div class="title">
-						<strong>最新商品</strong>
+						<strong>最新图书</strong>
 						<a  target="_blank"></a>
 					</div>
 					<ul class="tab">
 							<li class="current">
-								<a href="./蔬菜分类.htm?tagIds=2" target="_blank"></a>
+								<a href="" target="_blank"></a>
 							</li>
-							<li>
-								<a  target="_blank"></a>
-							</li>
-							<li>
-								<a target="_blank"></a>
-							</li>
-					</ul>
-<!-- 					<div class="newProductAd">
-									<img src="${pageContext.request.contextPath}/image/q.jpg" width="260" height="343" alt="最新商品" title="最新商品">
-						</div>
-						 -->						
+							
+					</ul>						
 						 <ul class="tabContent" style="display: block;">
+						 <s:iterator var="n" value="nList">
 									<li>
-										<a  target="_blank"><img src="${pageContext.request.contextPath}/image/l.jpg" data-original="http://storage.shopxx.net/demo-image/3.0/201301/4a51167a-89d5-4710-aca2-7c76edc355b8-thumbnail.jpg" style="display: block;"></a>									</li>
-									<li>
-										<a  target="_blank"><img src="${pageContext.request.contextPath}/image/m.jpg" style="display: block;"></a>									</li>
-									
-									<li>
-										<a target="_blank"><img src="${pageContext.request.contextPath}/image/n.jpg" style="display: block;"></a>									</li>
-									<li>
-										<a target="_blank"><img src="${pageContext.request.contextPath}/image/o.jpg" style="display: block;"></a>									</li>
-									<li>
-										<a target="_blank"><img src="${pageContext.request.contextPath}/image/p.jpg" style="display: block;"></a>									</li>
-									<li>
-										<a target="_blank"><img src="${pageContext.request.contextPath}/image/m.jpg" style="display: block;"></a>									</li>
-									<li>
-										<a  target="_blank"><img src="${pageContext.request.contextPath}/image/15.jpg" style="display: block;"></a>
-									<li>
-										<a  target="_blank"><img src="${pageContext.request.contextPath}/image/l.jpg" data-original="http://storage.shopxx.net/demo-image/3.0/201301/b499fb5e-999f-431b-a375-172ee09e4a3e-thumbnail.jpg" style="display: block;" /></a>
+										<a href="${pageContext.request.contextPath}/book_findByBid.action?bid=<s:property value="#n.bid"/>"><img src="${pageContext.request.contextPath}/<s:property value="#n.image"/>" data-original="http://storage.shopxx.net/demo-image/3.0/201301/0ff130db-0a1b-4b8d-a918-ed9016317009-thumbnail.jpg" style="display: block;"></a>
 									</li>
-									<li>
-										<a  target="_blank"><img src="${pageContext.request.contextPath}/image/l.jpg" data-original="http://storage.shopxx.net/demo-image/3.0/201301/b499fb5e-999f-431b-a375-172ee09e4a3e-thumbnail.jpg" style="display: block;" /></a>
-									</li>
-									<li>
-										<a  target="_blank"><img src="${pageContext.request.contextPath}/image/l.jpg" data-original="http://storage.shopxx.net/demo-image/3.0/201301/b499fb5e-999f-431b-a375-172ee09e4a3e-thumbnail.jpg" style="display: block;" /></a>
-									</li>
+
+						</s:iterator>				
 						</ul>
 						<ul class="tabContent" style="display: none;">
 									<li>
@@ -286,60 +213,12 @@
 							</dd>
 							
 					<dd class="more">
-						<a >更多</a>
+						<a href="${pageContext.request.contextPath}/adminUser_loginPage.action">后台登录</a>
 					</dd>
 				</dl>
 			</div>
 		</div>
 	</div>
-<div class="container footer">
-	<div class="span24">
-		<div class="footerAd">
-					<img src="${pageContext.request.contextPath}/image/footer.jpg" width="950" height="52" alt="我们的优势" title="我们的优势">
-</div>	</div>
-	<div class="span24">
-		<ul class="bottomNav">
-					<li>
-						<a>关于我们</a>
-						|
-					</li>
-					<li>
-						<a>联系我们</a>
-						|
-					</li>
-					<li>
-						<a>招贤纳士</a>
-						|
-					</li>
-					<li>
-						<a>法律声明</a>
-						|
-					</li>
-					<li>
-						<a>友情链接</a>
-						|
-					</li>
-					<li>
-						<a target="_blank">支付方式</a>
-						|
-					</li>
-					<li>
-						<a target="_blank">配送方式</a>
-						|
-					</li>
-					<li>
-						<a>服务声明</a>
-						|
-					</li>
-					<li>
-						<a>广告声明</a>
-						
-					</li>
-		</ul>
-	</div>
-	<div class="span24">
-		<div class="copyright">Copyright © 2005-2015 网上商城 版权所有</div>
-	</div>
-</div>
+
 </body>
 </html>

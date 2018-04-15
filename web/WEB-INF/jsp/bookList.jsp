@@ -39,7 +39,7 @@
 							<a href="${pageContext.request.contextPath}/book_findByCid.action?cid=<s:property
 									value="#c.cid" />&page=1"><s:property
 									value="#c.cname" /></a>
-						</dt>
+				 		</dt>
 						<s:iterator var="cs" value="#c.categorySeconds">
 							<dd>
 								<a href="${pageContext.request.contextPath}/book_findByCsid.action?csid=<s:property value="#cs.csid" />&page=1"><s:property value="#cs.csname" /></a>
