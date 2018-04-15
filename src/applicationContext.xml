@@ -10,7 +10,7 @@
 	http://www.springframework.org/schema/context/spring-context.xsd
 	http://www.springframework.org/schema/aop
 	http://www.springframework.org/schema/aop/spring-aop.xsd
-	http://www.springframework.org/schema/tx 
+	http://www.springframework.org/schema/tx
 	http://www.springframework.org/schema/tx/spring-tx.xsd">
 
 	<!-- 配置连接池: -->
@@ -45,6 +45,10 @@
 				<value>com/book/shop/category/vo/Category.hbm.xml</value>
 				<value>com/book/shop/book/vo/Book.hbm.xml</value>
 				<value>com/book/shop/categorysecond/vo/CategorySecond.hbm.xml</value>
+				<value>com/book/shop/order/vo/Order.hbm.xml</value>
+				<value>com/book/shop/order/vo/OrderItem.hbm.xml</value>
+				<value>com/book/shop/adminuser/vo/AdminUser.hbm.xml</value>
+				<value>com/book/shop/comment/vo/Comment.hbm.xml</value>
 			</list>
 		</property>
 	</bean>
@@ -88,6 +92,76 @@
 		<property name="bookService" ref="bookService"/>
 	</bean>
 
+	<!-- 订单模块的action -->
+	<bean id="orderAction" class="com.book.shop.order.action.OrderAction" scope="prototype">
+		<!--注入Service-->
+		<property name="orderService" ref="orderService"/>
+	</bean>
+
+	<!-- 后台订单模块的action -->
+	<bean id="commentAction" class="com.book.shop.comment.action.CommentAction" scope="prototype">
+		<!--注入Service-->
+		<property name="orderService" ref="orderService"/>
+		<property name="commentService" ref="commentService"/>
+	</bean>
+
+	<!-- 订单项模块的action -->
+	<bean id="adminOrderItemAction" class="com.book.shop.order.adminaction.AdminOrderItemsAction" scope="prototype">
+		<!--注入Service-->
+		<property name="orderItemService" ref="orderItemService"/>
+	</bean>
+	<!-- 管理员模块的action -->
+	<bean id="adminUserAction" class="com.book.shop.adminuser.action.AdminUserAction" scope="prototype">
+		<!--注入Service-->
+		<property name="adminUserService" ref="adminUserService"/>
+	</bean>
+
+	<!-- 配置后台一级分类管理的action -->
+	<bean id="adminCategoryAction" class="com.book.shop.category.adminaction.AdminCategoryAction" scope="prototype">
+		<!--注入Service-->
+		<property name="categoryService" ref="categoryService"/>
+	</bean>
+
+	<!-- 配置后台二级分类管理的action -->
+	<bean id="adminCategorySecondAction" class="com.book.shop.categorysecond.adminaction.AdminCategorySecondAction" scope="prototype">
+		<!--注入二级Service-->
+		<property name="categorySecondService" ref="categorySecondService"/>
+		<!--注入一级Service-->
+		<property name="categoryService" ref="categoryService"/>
+
+	</bean>
+
+	<!-- 配置后台图书管理的action -->
+	<bean id="adminBookAction" class="com.book.shop.book.adminaction.AdminBookAction" scope="prototype">
+		<!--注入图书Service-->
+		<property name="bookService" ref="bookService"/>
+		<!--注入二级Service-->
+		<property name="categorySecondService" ref="categorySecondService"/>
+	</bean>
+
+	<!-- 配置后台订单管理的action -->
+	<bean id="adminOrderAction" class="com.book.shop.order.adminaction.AdminOrderAction" scope="prototype">
+
+		<!--注入订单Service-->
+		<property name="orderService" ref="orderService"/>
+	</bean>
+
+
+	<!-- 配置后台用户管理的action -->
+	<bean id="adminUsersAction" class="com.book.shop.user.adminaction.AdminUserAction" scope="prototype">
+
+		<!--注入Service-->
+		<property name="userService" ref="userService"/>
+	</bean>
+
+
+	<!-- 配置后台评论管理的action -->
+	<bean id="adminCommentAction" class="com.book.shop.comment.adminaction.AdminCommentAction" scope="prototype">
+
+		<!--注入订单Service-->
+		<property name="commentService" ref="commentService"/>
+	</bean>
+
 	<!-- Service的配置  ===========================-->
 	<bean id="userService" class="com.book.shop.user.service.UserService">
 		<property name="userDao" ref="userDao"/>
@@ -101,6 +175,27 @@
 		<property name="bookDao" ref="bookDao"/>
 	</bean>
 
+	<bean id="orderService" class="com.book.shop.order.service.OrderService">
+		<property name="orderDao" ref="orderDao"/>
+	</bean>
+
+	<bean id="orderItemService" class="com.book.shop.order.service.OrderItemService">
+		<property name="orderItemDao" ref="orderItemDao"/>
+	</bean>
+
+	<bean id="adminUserService" class="com.book.shop.adminuser.service.AdminUserService">
+		<property name="adminUserDao" ref="adminUserDao"/>
+	</bean>
+
+	<!-- 二级分类的service -->
+	<bean id="categorySecondService" class="com.book.shop.categorysecond.service.CategorySecondService">
+		<property name="categorySecondDao" ref="categorySecondDao"/>
+	</bean>
+	<!-- 评论的service -->
+	<bean id="commentService" class="com.book.shop.comment.service.CommentService">
+		<property name="commentDao" ref="commentDao"/>
+	</bean>
+
 
 	<!-- Dao的配置  ===========================-->
 	<bean id="userDao" class="com.book.shop.user.dao.UserDao">
@@ -112,6 +207,27 @@
 	</bean>
 
 	<bean id="bookDao" class="com.book.shop.book.dao.BookDao">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+
+	<bean id="orderDao" class="com.book.shop.order.dao.OrderDao">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+
+	<bean id="orderItemDao" class="com.book.shop.order.dao.OrderItemDao">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	<!-- 后台管理dao -->
+	<bean id="adminUserDao" class="com.book.shop.adminuser.dao.AdminUserDao">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+
+	<!-- 二级分类的dao -->
+	<bean id="categorySecondDao" class="com.book.shop.categorysecond.dao.CategorySecondDao">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	<!-- 评论的dao -->
+	<bean id="commentDao" class="com.book.shop.comment.dao.CommentDao">
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
 </beans>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE struts PUBLIC
 		"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
 		"http://struts.apache.org/dtds/struts-2.3.dtd">
@@ -7,8 +7,12 @@
 	<constant name="struts.devMode" value="false" />
 
 	<package name="bookShop" extends="struts-default" namespace="/">
+
+
 		<global-results>
 			<result name="msg">/WEB-INF/jsp/msg.jsp</result>
+			<result name="login">/WEB-INF/jsp/login.jsp</result>
+			<result name="loginFail">/admin/index.jsp</result>
 		</global-results>
 
 		<!--配置首页访问的Action  -->
@@ -23,8 +27,11 @@
 			<result name="input">/WEB-INF/jsp/register.jsp</result>
 			<result name="loginPage">/WEB-INF/jsp/login.jsp</result>
 			<result name="loginSuccess" type="redirectAction">index</result>
-			<result name="login">/WEB-INF/jsp/login.jsp</result>
 			<result name="quit" type="redirectAction">index</result>
+			<result name="updateInfo">/WEB-INF/jsp/updateInfo.jsp</result>
+			<result name="updateSuccess">/WEB-INF/jsp/login.jsp</result>
+			<result name="updatePass">/WEB-INF/jsp/updatePass.jsp</result>
+			<result name="updatePassSuccess">/WEB-INF/jsp/login.jsp</result>
 
 		</action>
 
@@ -33,7 +40,8 @@
 			<result name="findByBid">/WEB-INF/jsp/book.jsp</result>
 			<result name="findByCid">/WEB-INF/jsp/bookList.jsp</result>
 			<result name="findByCsid">/WEB-INF/jsp/bookList.jsp</result>
-
+			<!-- <result name="search">/WEB-INF/jsp/searchResult.jsp</result> -->
+			<result name="search">/WEB-INF/jsp/index2.jsp</result>
 		</action>
 
 		<!-- 	配置购物车的Action -->
@@ -44,5 +52,86 @@
 			<result name="myCart">/WEB-INF/jsp/cart.jsp</result>
 		</action>
 
+		<!-- 订单的action -->
+		<action name="order_*" class="orderAction" method="{1}">
+			<result name="saveSuccess">/WEB-INF/jsp/order.jsp</result>
+			<result name="findByUidSuccess">/WEB-INF/jsp/orderList.jsp</result>
+			<result name="findByOidSuccess">/WEB-INF/jsp/order.jsp</result>
+			<result name="updateStateSuccess" type="redirectAction">order_findByUid.action?page=1</result>
+			<result name="comment">/WEB-INF/jsp/order_comment.jsp</result>
+		</action>
+
+		<!-- 	评论的Action -->
+		<action name="comment_*" class="commentAction" method="{1}">
+			<result name="commentSuccess">/WEB-INF/jsp/msg.jsp</result>
+
+		</action>
+		<!-- 管理员的action -->
+		<action name="adminUser_*" class="adminUserAction" method="{1}">
+			<result name="loginSuccess" type="redirect">/admin/home.jsp</result>
+			<result name="loginFail">/admin/index.jsp</result>
+			<result name="loginPage">/admin/index.jsp</result>
+
+
+		</action>
+
+		<!-- 配置后台一级分类管理 -->
+		<action name="adminCategory_*" class="adminCategoryAction" method="{1}">
+			<result name="findAll">/admin/category/list.jsp</result>
+			<result name="saveSuccess" type="redirectAction">adminCategory_findAll.action</result>
+			<result name="deleteSuccess" type="redirectAction">adminCategory_findAll.action</result>
+			<result name="editSuccess">/admin/category/edit.jsp</result>
+			<result name="updateSuccess" type="redirectAction">adminCategory_findAll.action</result>
+			<!-- <interceptor-ref name="PrivilegeInterceptor"></interceptor-ref>
+			<interceptor-ref name="defaultStack"></interceptor-ref> -->
+		</action>
+
+		<!-- 配置后台二级分类管理 -->
+		<action name="adminCategorySecond_*" class="adminCategorySecondAction" method="{1}">
+			<result name="findAll">/admin/categorysecond/list.jsp</result>
+			<result name="addPageSuccess" >/admin/categorysecond/add.jsp</result>
+			<result name="saveSuccess" type="redirectAction">adminCategorySecond_findAll.action?page=1</result>
+			<result name="deleteSuccess" type="redirectAction">adminCategorySecond_findAll.action?page=1</result>
+			<result name="editSuccess">/admin/categorysecond/edit.jsp</result>
+			<result name="updateSuccess" type="redirectAction">adminCategorySecond_findAll.action?page=1</result>
+			<!-- <interceptor-ref name="PrivilegeInterceptor"></interceptor-ref>
+			<interceptor-ref name="defaultStack"></interceptor-ref> -->
+		</action>
+
+		<!-- 配置后台图书管理 -->
+		<action name="adminBook_*" class="adminBookAction" method="{1}">
+			<result name="findAll">/admin/books/list.jsp</result>
+			<result name="addPageSuccess" >/admin/books/add.jsp</result>
+			<result name="saveSuccess" type="redirectAction">adminBook_findAll.action?page=1</result>
+			<result name="deleteSuccess" type="redirectAction">adminBook_findAll.action?page=1</result>
+			<result name="editSuccess">/admin/books/edit.jsp</result>
+			<result name="updateSuccess" type="redirectAction">adminBook_findAll.action?page=1</result>
+			<!-- <interceptor-ref name="PrivilegeInterceptor"></interceptor-ref>
+			<interceptor-ref name="defaultStack"></interceptor-ref> -->
+		</action>
+
+		<!-- 配置后台订单管理 -->
+		<action name="adminOrder_*" class="adminOrderAction" method="{1}">
+			<result name="findAll">/admin/order/list.jsp</result>
+			<result name="findOrderItem" >/admin/order/orderItem.jsp</result>
+			<result name="updateStateSuccess" type="redirectAction">adminOrder_findAll.action?page=1</result>
+			<!-- <interceptor-ref name="PrivilegeInterceptor"></interceptor-ref>
+			<interceptor-ref name="defaultStack"></interceptor-ref> -->
+		</action>
+
+		<!-- 配置后台销售管理 -->
+		<action name="adminOrderItem_*" class="adminOrderItemAction" method="{1}">
+			<result name="findAll">/admin/sale/list.jsp</result>
+		</action>
+
+		<!-- 配置后台用户管理 -->
+		<action name="adminUsers_*" class="adminUsersAction" method="{1}">
+			<result name="findAll">/admin/user/list.jsp</result>
+		</action>
+
+		<!-- 配置后台评论管理 -->
+		<action name="adminComment_*" class="adminCommentAction" method="{1}">
+			<result name="findAll">/admin/comment/list.jsp</result>
+		</action>
 	</package>
 </struts>
